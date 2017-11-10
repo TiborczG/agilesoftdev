@@ -32,12 +32,28 @@ namespace PicBook.Web
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o =>
                 {
                     o.LoginPath = new PathString("/Account/Login");
                     o.LogoutPath = new PathString("/Home/Index");
+                }).AddTwitter(twitterOptions =>
+                {
+                    twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"];
+                    twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
+                    twitterOptions.SaveTokens = true;
+
+                }).AddMicrosoftAccount(microsoftOptions =>
+                {
+                    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+                    microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
                 })
+                //.AddGoogle(googleOptions =>
+                //{
+                //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                //})
                 .AddFacebook(o =>
                     {
                         o.AppId = Configuration["Authentication:Facebook:AppId"];
