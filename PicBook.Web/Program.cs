@@ -15,13 +15,7 @@ namespace PicBook.Web
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
-        }
-
-        // for EF Core tooling use this method with exactly this name as tooling checks for it by convention
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            var host = WebHost.CreateDefaultBuilder(args)
+           var host = WebHost.CreateDefaultBuilder(args)
                 .ConfigureLogging(factory =>
                 {
                     factory.AddConsole();
@@ -39,7 +33,7 @@ namespace PicBook.Web
                 .UseStartup<Startup>()
                 .Build();
 
-            return host;
+            host.Run();
         }
     }
 }
